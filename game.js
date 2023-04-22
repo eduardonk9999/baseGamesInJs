@@ -5,59 +5,59 @@ window.onload = function(){
   document.addEventListener("keydown", keyPush);
   setInterval(game, 80);
 
-  const vel = 1;
+  const VELOCIDADE = 1;
 
   var VELOCIDADE_X = VELOCIDADE_Y = 0;
   var POSICAO_QUADRADO_X = 10;
-  var py = 15;
-  var tp = 30;
+  var POSICAO_QUADRADO_y = 10;
+  var TAMANHO_DA_PECA = 30;
   var QUANTIDADEDEPECAS = 20;
-  var ax=ay=15;
+  var MACAO_X=MACAO_Y=10;
 
-  var trail = [];
+  var ARRAY_SNAKE = [];
   tail = 5;
 
   function game(){
       POSICAO_QUADRADO_X += VELOCIDADE_X;
-      py += VELOCIDADE_Y;
+      POSICAO_QUADRADO_y += VELOCIDADE_Y;
       if (POSICAO_QUADRADO_X <0) {
           POSICAO_QUADRADO_X = QUANTIDADEDEPECAS-1;
       }
       if (POSICAO_QUADRADO_X > QUANTIDADEDEPECAS-1) {
           POSICAO_QUADRADO_X = 0;
       }
-      if (py < 0) {
-          py = QUANTIDADEDEPECAS-1;
+      if (POSICAO_QUADRADO_y < 0) {
+          POSICAO_QUADRADO_y = QUANTIDADEDEPECAS-1;
       }
-      if (py > QUANTIDADEDEPECAS-1) {
-          py = 0;
+      if (POSICAO_QUADRADO_y > QUANTIDADEDEPECAS-1) {
+          POSICAO_QUADRADO_y = 0;
       }
 
       ctx.fillStyle = "black";
       ctx.fillRect(0,0, stage.width, stage.height);
 
       ctx.fillStyle = "red";
-      ctx.fillRect(ax*tp, ay*tp, tp,tp);
+      ctx.fillRect(MACAO_X*TAMANHO_DA_PECA, MACAO_Y*TAMANHO_DA_PECA, TAMANHO_DA_PECA,TAMANHO_DA_PECA);
 
       ctx.fillStyle = "gray";
-      for (var i = 0; i < trail.length; i++) {
-          ctx.fillRect(trail[i].x*tp, trail[i].y*tp, tp-1,tp-1);
-          if (trail[i].x == POSICAO_QUADRADO_X && trail[i].y == py)
+      for (var i = 0; i < ARRAY_SNAKE.length; i++) {
+          ctx.fillRect(ARRAY_SNAKE[i].x*TAMANHO_DA_PECA, ARRAY_SNAKE[i].y*TAMANHO_DA_PECA, TAMANHO_DA_PECA-1,TAMANHO_DA_PECA-1);
+          if (ARRAY_SNAKE[i].x == POSICAO_QUADRADO_X && ARRAY_SNAKE[i].y == POSICAO_QUADRADO_y)
           {
               VELOCIDADE_X = VELOCIDADE_Y=0;
               tail =5;
           }
       }
 
-      trail.push({x:POSICAO_QUADRADO_X,y:py })
-      while (trail.length > tail) {
-          trail.shift();
+      ARRAY_SNAKE.push({x:POSICAO_QUADRADO_X,y:POSICAO_QUADRADO_y })
+      while (ARRAY_SNAKE.length > tail) {
+          ARRAY_SNAKE.shift();
       }
 
-      if (ax==POSICAO_QUADRADO_X && ay==py){
+      if (MACAO_X==POSICAO_QUADRADO_X && MACAO_Y==POSICAO_QUADRADO_y){
           tail++;
-          ax = Math.floor(Math.random()*QUANTIDADEDEPECAS);
-          ay = Math.floor(Math.random()*QUANTIDADEDEPECAS);
+          MACAO_X = Math.floor(Math.random()*QUANTIDADEDEPECAS);
+          MACAO_Y = Math.floor(Math.random()*QUANTIDADEDEPECAS);
       }
 
   }
@@ -66,20 +66,20 @@ window.onload = function(){
 
       switch (event.keyCode) {
           case 37: // Left
-              VELOCIDADE_X = -vel;
+              VELOCIDADE_X = -VELOCIDADE;
               VELOCIDADE_Y = 0;
               break;
           case 38: // up
               VELOCIDADE_X = 0;
-              VELOCIDADE_Y = -vel;
+              VELOCIDADE_Y = -VELOCIDADE;
               break;
           case 39: // right
-              VELOCIDADE_X = vel;
+              VELOCIDADE_X = VELOCIDADE;
               VELOCIDADE_Y = 0;
               break;
           case 40: // down
               VELOCIDADE_X = 0;
-              VELOCIDADE_Y = vel;
+              VELOCIDADE_Y = VELOCIDADE;
               break;          
           default:
               
@@ -96,7 +96,7 @@ window.onload = function(){
 
 // Cria borda em cada quadrado do canvas
 /*
-for(var LARGURAX = 0; LARGURAX < 20; LARGURAX++) {
+for(var LARGURMACAO_X = 0; LARGURAX < 20; LARGURAX++) {
   for(var ALTURAY = 0; ALTURAY < 20; ALTURAY++) {
     quadrado.fillStyle = "gray"
     quadrado.fillRect(ALTURAY * 20, LARGURAX * 20, tela.width, tela.height)
