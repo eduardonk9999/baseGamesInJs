@@ -1,6 +1,6 @@
 window.onload = function(){
  
-  var stage = document.getElementById('stage');
+  var stage = document.getElementById('canvas');
   var ctx = stage.getContext("2d");
   document.addEventListener("keydown", keyPush);
   setInterval(game, 80);
@@ -20,7 +20,7 @@ window.onload = function(){
   function game(){
       POSICAO_QUADRADO_X += VELOCIDADE_X;
       POSICAO_QUADRADO_y += VELOCIDADE_Y;
-      if (POSICAO_QUADRADO_X <0) {
+      if (POSICAO_QUADRADO_X < 0) {
           POSICAO_QUADRADO_X = QUANTIDADEDEPECAS-1;
       }
       if (POSICAO_QUADRADO_X > QUANTIDADEDEPECAS-1) {
